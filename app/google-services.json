@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "987629646803",
+    "project_id": "lista-vip-cd0da",
+    "storage_bucket": "lista-vip-cd0da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987629646803:android:87bd6531331eb4f5823526",
+        "android_client_info": {
+          "package_name": "devandroid.vinicius.listavip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW09hS2eeEQoeHWQfXjscyv7n2Mvsugvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
