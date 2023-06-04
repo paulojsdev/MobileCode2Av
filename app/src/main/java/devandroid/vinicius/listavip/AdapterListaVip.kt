@@ -6,23 +6,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdapterListaVip(private val usuarios: List<dbListaVip>) : RecyclerView.Adapter<AdapterListaVip.UsuarioViewHolder>() {
+class AdapterListaVip(private val userList: ArrayList<dbListaVip>) :
+    RecyclerView.Adapter<AdapterListaVip.ViewHolder>(){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    class UsuarioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nomeTextView: TextView = itemView.findViewById(R.id.nomeTextView)
+        val nomeUsuario : TextView = itemView.findViewById(R.id.nomeEditText)
+
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsuarioViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_lista_usuario, parent, false)
-        return UsuarioViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.lista_item, parent, false)
+        return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: UsuarioViewHolder, position: Int) {
-        val usuario = usuarios[position]
-        holder.nomeTextView.text = usuario.nome
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentUser = userList[position]
+        holder.nomeUsuario.text =currentUser.nome
     }
 
     override fun getItemCount(): Int {
-        return usuarios.size
+        return userList.size
     }
+
+
+
+
 }

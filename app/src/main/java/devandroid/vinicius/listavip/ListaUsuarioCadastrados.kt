@@ -2,6 +2,8 @@ package devandroid.vinicius.listavip
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -13,9 +15,9 @@ import com.google.firebase.database.ValueEventListener
 class ListaUsuarioCadastrados : AppCompatActivity() {
 
     private lateinit var usuariosRecyclerView: RecyclerView
-    private lateinit var usuarioAdapter: AdapterListaVip
+    private lateinit var tvLoadingData: TextView
     private lateinit var dbRef: DatabaseReference
-    private lateinit var usuariosListener: ValueEventListener
+    private lateinit var userList: ArrayList<dbListaVip>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,22 +25,40 @@ class ListaUsuarioCadastrados : AppCompatActivity() {
 
         usuariosRecyclerView = findViewById(R.id.usuariosRecyclerView)
         usuariosRecyclerView.layoutManager = LinearLayoutManager(this)
-        usuarioAdapter = AdapterListaVip(emptyList())
-        usuariosRecyclerView.adapter = usuarioAdapter
+        usuariosRecyclerView.setHasFixedSize(true)
+        tvLoadingData = findViewById(R.id.tvLoadingData)
+
+        userList = arrayListOf<dbListaVip>()
+
+        getUsuariosData()
+
+    }
+    private fun getUsuariosData() {
+
+        usuariosRecyclerView.visibility =View.GONE
+        tvLoadingData.visibility =View.VISIBLE
 
         dbRef = FirebaseDatabase.getInstance().reference.child("Usuário")
 
-        usuariosListener = object : ValueEventListener {
+        dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val usuarios = mutableListOf<dbListaVip>()
-                for (dataSnapshot in snapshot.children) {
-                    val usuario = dataSnapshot.getValue(dbListaVip::class.java)
+                userList.clear()
+                if (snapshot.exists()) {
+                    for (userSnap in snapshot.children) {
+                        val userData = userSnap.getValue(dbListaVip::class.java)
+                        userList.add(userData!!)
+                    }
+                    val userAdapter = AdapterListaVip(userList)
+                    usuariosRecyclerView.adapter = userAdapter
+
+                    usuariosRecyclerView.visibility = View.VISIBLE
+                    tvLoadingData.visibility = View.GONE
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        }
+        })
     }
 }
