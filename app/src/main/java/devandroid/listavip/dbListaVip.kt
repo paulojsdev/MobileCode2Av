@@ -1,4 +1,4 @@
-package devandroid.vinicius.listavip
+package devandroid.listavip
 
 data class dbListaVip(
  var nome: String? = null,

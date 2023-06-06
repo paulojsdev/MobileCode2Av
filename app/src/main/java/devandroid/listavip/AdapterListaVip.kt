@@ -1,4 +1,4 @@
-package devandroid.vinicius.listavip
+package devandroid.listavip
 
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +27,4 @@ class AdapterListaVip(private val userList: ArrayList<dbListaVip>) :
     override fun getItemCount(): Int {
         return userList.size
     }
-
-
-
-
 }

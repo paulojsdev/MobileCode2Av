@@ -1,4 +1,4 @@
-package devandroid.vinicius.listavip
+package devandroid.listavip
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        dbRef = FirebaseDatabase.getInstance().reference.child("Usuário")
+        dbRef = FirebaseDatabase.getInstance().getReference("Usuário")
 
 
         val nomeEditText = findViewById<EditText>(R.id.nomeEditText)
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 val key = dbRef.push().key!!
 
 
-                val usuario = dbListaVip(nome, telefone, email)
+                val usuario = dbListaVip(nome, email, telefone)
 
 
                 dbRef.child(key).setValue(usuario).addOnCompleteListener { task ->
